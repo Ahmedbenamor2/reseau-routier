@@ -1,0 +1,48 @@
+.map{
+    position: absolute;
+}
+.img{
+    position: absolute;
+    width: 80%;
+    height: 80vh;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+}
+.marker {
+    width: 30px;
+    height: 30px;
+  }
+.selectMapType{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 100;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.markerElt:hover{
+    transform: scale(1.2);
+}
+
+.markerElt:hover::after{
+    content: attr(data-desc);
+    width: max-content;
+    height: max-content;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: .5rem;
+    font-weight: bold;
+    border: 1px solid black;
+}
