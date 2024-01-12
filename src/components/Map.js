@@ -60,6 +60,20 @@ const MapComponent = () => {
       }
     });
 
+  
+    const getWeatherAPI=async (lat,lon)=>{
+      const APIKey='ab40650d18f8538e6ae2b3bf9bd13154';
+      const response=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKey}&units=metric`);
+      const data=await response.json();
+      console.log(data);
+      const elt=document.getElementById('weatherApp');
+      elt.innerHTML=`<p>${data.name}</p>
+      <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png"/>
+      <p>${Math.round(data.main.temp)}°C</p>
+      <p>${data.weather[0].description}</p>
+      `;
+    }
+    getWeatherAPI(36.85,10.20);
     
     let incidentOverlays = [];
 
@@ -91,10 +105,8 @@ const MapComponent = () => {
 
     const addNewIncident = async (latitude, longitude, costomDesc, costomType) => {
       try {
-        // Send a request to add the new incident to the backend
         await addIncident({ lat: latitude, lng: longitude, shortDesc: costomDesc, type: costomType });
 
-        // Display incidents after adding the new incident
         displayIncidents();
       } catch (error) {
         console.error('Error adding new incident:', error);
@@ -110,6 +122,8 @@ const MapComponent = () => {
       const longitude = lonLat[0].toFixed(2);
       const latitude = lonLat[1].toFixed(2);
       console.log(`Longitude:${longitude}, Latitude:${latitude}`);
+      getWeatherAPI(latitude,longitude);
+      
       markerOverlay.setPosition(clickedCoord);
       map.getView().animate({ center: clickedCoord, zoom: 12 });
       const apikey = 'Rpjq5JCntJIWfJZd6RbXb4urlfU796yS';
@@ -196,7 +210,7 @@ const MapComponent = () => {
       </select>
       <div id="map" style={{ width: '100%', height: '100vh' }}></div>
       {imgUrl && <img src={imgUrl} className={styles.img} alt="Map" />}
-
+      <div id='weatherApp' className={styles.weather}></div>
     </>
   );
 };
